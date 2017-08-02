@@ -101,7 +101,7 @@ Running on Heroku is highly recommended to ensure maximum up-time.
 3. Clone `poloLender` application source code from github:
 
     ```
-    git clone https://github.com/dutu/poloLender.git
+    git clone https://github.com/Kaim-Lee/poloLender.git
     cd poloLender
     ```
 4. Install the dependencies, preparing your system for running the app locally:
@@ -145,7 +145,7 @@ Once installed, you'll have access to the heroku command from your command line.
 4. Clone `poloLender` application source code from github:
 
     ```
-    git clone https://github.com/dutu/poloLender.git
+    git clone https://github.com/Kaim-Lee/poloLender.git
     cd poloLender
     ```
 5. Create an app on Heroku and deploy the code

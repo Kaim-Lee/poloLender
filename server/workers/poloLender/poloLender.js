@@ -715,8 +715,11 @@ export const PoloLender = function(name) {
       offersCount: status.offersCount,
       activeLoans: status.activeLoansCount,
     };
-    msg = `♣ poloLender ${pjson.version} running for ${m.runningForDays} days • restarted ${m.restartedAgo} (${m.restartedAt})`;
-    msg += ` • Offers/Loans: ${m.offersCount}/${m.activeLoans}`;
+    //msg = `♣ poloLender ${pjson.version} running for ${m.runningForDays} days • restarted ${m.restartedAgo} (${m.restartedAt})`;
+    //msg += ` • Offers/Loans: ${m.offersCount}/${m.activeLoans}`;
+    msg = `\n*폴로랜더-한글버전 v${pjson.version}* - ${m.runningForDays}일 째`;
+    msg += `\n • 최근 재시작: ${m.restartedAgo} (${m.restartedAt})`;
+    msg += `\n • 랜딩(성공/시도): ${m.activeLoans}/${m.offersCount}`;    
     logRep(`${msg}`);
 
     if (clientMessage.lastClientSemver && semver.gt(clientMessage.lastClientSemver, pjson.version)) {
@@ -727,6 +730,7 @@ export const PoloLender = function(name) {
       logRep(`${clientMessage.message}`);
     }
 
+    msg =``;
     currencies.forEach(function (c, index, array) {
       if (new Big(depositFunds[c]).lte(0)) {
         return;
@@ -743,23 +747,46 @@ export const PoloLender = function(name) {
         }
       });
 
-      msg = `${c}: ● TOTAL: ${depositFunds[c]} `;
+      //msg = `${c}: ● TOTAL: ${depositFunds[c]} `;
+      //if(rateBTCUSD && ratesBTC[c]) {
+      //  let totalUSD = new Big(rateBTCUSD).times(ratesBTC[c]).times(depositFunds[c]).toFixed(0);
+      //  msg += `(USD ${totalUSD}) `;
+      //}
+      //msg += `• ${activeLoansAmount} in ${activeLoansCount} active loans ● PROFIT: ${profit.toFixed(8)} (${profit.div(minutes).times(60*24).toFixed(3)}/day)`;
+      //msg += ` = ${(profit/config.startBalance[c] * 100).toFixed(2)}% (${(profit/config.startBalance[c] * 100 /(minutes/60/24) ).toFixed(3)}%/day)`;
+      //if(rateBTCUSD && ratesBTC[c]) {
+      //  let rateCurrencyUSD = new Big(rateBTCUSD).times(ratesBTC[c]).toString();
+      //  msg += ` ≈ USD ${profit.times(rateCurrencyUSD).toFixed(0)} (${profit.times(rateCurrencyUSD).div(minutes).times(60*24).toFixed(3)}/day)`;
+      //}
+      //let wmrMsg = msgRate(status.wmr[c]);
+      //let ewmrMsg =  msgRate(new Big(status.wmr[c]).times(0.85).toFixed(8));
+      //let apyMsg = msgApy(status.wmr[c]);
+      //msg += ` • Daily war: ${wmrMsg} ewar: ${ewmrMsg} • APY: ${apyMsg} • alht: ${advisorInfo[c] && advisorInfo[c].averageLoanHoldingTime || ''}`;
+      let dollar_symbol = '$';
+      msg += `\n*${c}*`;
+      msg += `\n_• 코인수:_ ${depositFunds[c]} `;
       if(rateBTCUSD && ratesBTC[c]) {
         let totalUSD = new Big(rateBTCUSD).times(ratesBTC[c]).times(depositFunds[c]).toFixed(0);
-        msg += `(USD ${totalUSD}) `;
-      }
-      msg += `• ${activeLoansAmount} in ${activeLoansCount} active loans ● PROFIT: ${profit.toFixed(8)} (${profit.div(minutes).times(60*24).toFixed(3)}/day)`;
-      msg += ` = ${(profit/config.startBalance[c] * 100).toFixed(2)}% (${(profit/config.startBalance[c] * 100 /(minutes/60/24) ).toFixed(3)}%/day)`;
+        totalUSD = (totalUSD+"").replace(/./g, function(c, i, a) {
+            return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+        });          
+        msg += `(${dollar_symbol} ${totalUSD}) `;
+      }        
+      msg += `\n  - ${activeLoansAmount} ${c} (${activeLoansCount} 개의 유효한 랜딩)`;
+      msg += `\n_• 수익:_ ${profit.toFixed(8)} (${dollar_symbol} ${profit.div(minutes).times(60*24).toFixed(3)}/일)`;
+      msg += ` = ${(profit/config.startBalance[c] * 100).toFixed(2)}% (${(profit/config.startBalance[c] * 100 /(minutes/60/24) ).toFixed(2)}%/일) `;
       if(rateBTCUSD && ratesBTC[c]) {
         let rateCurrencyUSD = new Big(rateBTCUSD).times(ratesBTC[c]).toString();
-        msg += ` ≈ USD ${profit.times(rateCurrencyUSD).toFixed(0)} (${profit.times(rateCurrencyUSD).div(minutes).times(60*24).toFixed(3)}/day)`;
+        msg += `\n 약 ${dollar_symbol} ${profit.times(rateCurrencyUSD).toFixed(0)} (${dollar_symbol} ${profit.times(rateCurrencyUSD).div(minutes).times(60*24).toFixed(2)}/일) `;
       }
       let wmrMsg = msgRate(status.wmr[c]);
       let ewmrMsg =  msgRate(new Big(status.wmr[c]).times(0.85).toFixed(8));
       let apyMsg = msgApy(status.wmr[c]);
-      msg += ` • Daily war: ${wmrMsg} ewar: ${ewmrMsg} • APY: ${apyMsg} • alht: ${advisorInfo[c] && advisorInfo[c].averageLoanHoldingTime || ''}`;
-      logRep(msg);
+      msg += `\n  - 일일 WAR: ${wmrMsg}\n  - 일일 EWAR: ${ewmrMsg}`;
+      msg += `\n  - 연이자: ${apyMsg} `;
+      msg += `\n  - 평균랜딩보유시간: ${advisorInfo[c] && advisorInfo[c].averageLoanHoldingTime || ''}`;  
     });
+    logRep(msg);  
   };
 
   let currentApiKey = {};
@@ -1004,6 +1031,10 @@ export const PoloLender = function(name) {
           log.info(`Your read/only authorization token is: ${config.authToken.readOnly}`);
           log.info(`Your read/write authorization token is: ${config.authToken.readWrite}`);
           log.info(`Token expires on: ${config.authToken.tokenExpiresOn}`);
+          
+          logRep(`Your read/only authorization token is: ${config.authToken.readOnly}`); 
+          logRep(`Your read/write authorization token is: ${config.authToken.readWrite}`); 
+          logRep(`Token expires on: ${config.authToken.tokenExpiresOn}`); 
 
           httpServerStart(config.port);
           currentApiKey = config.apiKey;
