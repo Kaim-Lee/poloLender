@@ -1034,7 +1034,7 @@ export const PoloLender = function(name) {
           
           logRep(`Your read/only authorization token is: ${config.authToken.readOnly}`); 
           logRep(`Your read/write authorization token is: ${config.authToken.readWrite}`); 
-          logRep(`Token expires on: ${config.authToken.tokenExpiresOn}`); 
+          logRep(`Token expires on: ${config.authToken.tokenExpiresOn}`);  
 
           httpServerStart(config.port);
           currentApiKey = config.apiKey;
