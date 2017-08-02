@@ -1,13 +1,13 @@
 {
-  "name": "poloLenderPro",
-  "version": "1.1.0",
+  "name": "poloLenderPro-ko",
+  "version": "1.2.0",
   "description": "smart Poloniex lending bot - an automated engine for lending funds on Poloniex exchange",
-  "author": "dutu <dutu@protonmail.com>",
+  "author": "Kaim Lee <hslee2000@gmail.com>",  
   "license": "MIT",
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dutu/pololender.git"
+    "url": "https://github.com/Kaim-Lee/poloLender-ko.git"
   },
   "keywords": [
     "poloniex",
@@ -25,7 +25,7 @@
     "monero"
   ],
   "bugs": {
-    "url": "https://github.com/dutu/pololender/issues"
+    "url": "https://github.com/Kaim-Lee/poloLender-ko/issues"
   },
   "engines": {
     "node": "^7.7.4",
