@@ -16,7 +16,8 @@ let clientMessage = {};
 const showProcessingDataMessage = function showSavingDataMessage() {
   savingDataMessage = webix.message({
     id: 'savingData',
-    text: '<i class="fa fa-circle-o-notch fa-spin fa-fw"></i> Processing...',
+    //text: '<i class="fa fa-circle-o-notch fa-spin fa-fw"></i> Processing...',
+    text: '<i class="fa fa-circle-o-notch fa-spin fa-fw"></i> 적용 중...',
     expire: -1,
   });
 };

@@ -25,7 +25,8 @@ let poloLenderAppStatusConfig = {
     {
       autoheight: true, borderless: true, type: 'clean',
       cols: [
-        { width: width_col1, autoheight: true, template: 'Running since:' },
+        //{ width: width_col1, autoheight: true, template: 'Running since:' },
+        { width: width_col1, autoheight: true, template: '최초구동일:' },
         { id: 'poloLenderApp_runningSince', width: width_col2,
           template: function (obj) {
             if (!poloLenderAppStatusData.runningSince) {
@@ -40,7 +41,8 @@ let poloLenderAppStatusConfig = {
     {
       autoheight: true, borderless: true, type: 'clean',
       cols: [
-        { width: width_col1, autoheight: true, template: 'Version:' },
+        //{ width: width_col1, autoheight: true, template: 'Version:' },
+        { width: width_col1, autoheight: true, template: '버전:' },
         { id: 'poloLenderApp_version', width: width_col2,
           template: function (obj) {
             if (!poloLenderAppStatusData.runningClientSemver) {
@@ -55,7 +57,8 @@ let poloLenderAppStatusConfig = {
     {
       autoheight: true, borderless: true, type: 'clean',
       cols: [
-        { width: width_col1, autoheight: true, template: 'Restarted:' },
+        //{ width: width_col1, autoheight: true, template: 'Restarted:' },
+        { width: width_col1, autoheight: true, template: '재시작일:' },
         { id: 'poloLenderApp_restartedAt', width: width_col2,
           template: function (obj) {
             if (!poloLenderAppStatusData.restartedAt) {
@@ -85,7 +88,8 @@ let lendingEngineStatusConfig = {
     {
       autoheight: true, borderless: true, type: 'clean',
       cols: [
-        { width: width_col1, autoheight: true, template: 'Poloniex API activity:' },
+        //{ width: width_col1, autoheight: true, template: 'Poloniex API activity:' },
+        { width: width_col1, autoheight: true, template: 'Poloniex API 활동:' },
         { id: 'lendingEngineStatus_apiActivity', width: width_col2,
           template: function (obj) {
             let activityHtml;
@@ -120,7 +124,8 @@ let lendingEngineStatusConfig = {
     {
       autoheight: true, borderless: true, type: 'clean',
       cols: [
-        { width: width_col1, autoheight: true, template: 'Lending engine:' },
+        //{ width: width_col1, autoheight: true, template: 'Lending engine:' },
+        { width: width_col1, autoheight: true, template: '엔진:' },
         { id: 'lendingEngineStatus_status', width: width_col2,
           template: function (obj) {
             if (lendingEngineStatusData.isTradingEnabled) {
@@ -146,7 +151,8 @@ let lendingEngineStatusConfig = {
           value: 'Start',
           click: function () {
             if (!storage.browserAuth.isReadWriteAllowed) {
-              webix.message({ type:'error', text: 'Not authorized!<br>Read/write auth token required' });
+              //webix.message({ type:'error', text: 'Not authorized!<br>Read/write auth token required' });
+              webix.message({ type:'error', text: '인증되지 않음!<br>읽기/쓰기 토큰이 필요합니다.' });
               return;
             }
 
@@ -170,7 +176,8 @@ let advisorEngineStatusConfig = {
     {
       autoheight: true, borderless: true, type: 'clean',
       cols: [
-        { width: width_col1, autoheight: true, template: 'Running at:' },
+        //{ width: width_col1, autoheight: true, template: 'Running at:' },
+        { width: width_col1, autoheight: true, template: '소스:' },
         { id: 'advisorEngine_server', width: width_col2,
           template: function (obj) {
             return `${advisorEngineStatusData.server}`;
@@ -181,7 +188,8 @@ let advisorEngineStatusConfig = {
     {
       autoheight: true, borderless: true, type: 'clean',
       cols: [
-        { width: width_col1, autoheight: true, template: 'Connection status:' },
+        //{ width: width_col1, autoheight: true, template: 'Connection status:' },
+        { width: width_col1, autoheight: true, template: '연결 상태:' },
         { id: 'advisorEngine_connectionStatus', width: width_col2,
           template: function (obj) {
             return `${advisorEngineStatusData.connection}`;
@@ -192,7 +200,8 @@ let advisorEngineStatusConfig = {
     {
       autoheight: true, borderless: true, type: 'clean',
       cols: [
-        { width: width_col1, autoheight: true, template: 'Authentication:' },
+        //{ width: width_col1, autoheight: true, template: 'Authentication:' },
+        { width: width_col1, autoheight: true, template: '인증:' },
         { id: 'advisorEngine_authenticationStatus', width: width_col2,
           template: function (obj) {
             return `${advisorEngineStatusData.authentication.message}`;
@@ -221,12 +230,20 @@ let advisorInfoTableConfig = {
   drag: true,
   scroll: false,
   columns: [
-    { id: 'currency',	header: 'Currency', sort: 'string', adjust: true, tooltip: tooltip, template: returnCurrencyTemplate },
-    { id: 'averageLoanHoldingTime', header:'Average loan holding time', autowidth: true, adjust: true, tooltip: tooltip, cssFormat: alignRight },
-    { id: 'bestReturnRate', header:'Best loan rate', autowidth: true, adjust: true, sort: 'string', tooltip: tooltip, template: returnBestReturnRateTemplate, cssFormat: alignCenter },
-    { id: 'bestDuration', header:'Best loan duration', autowidth: true, adjust: true, tooltip: tooltip, cssFormat: alignCenter },
-    { id: 'minOrderAmount', header:'Min offer amount', autowidth: true, adjust: true, tooltip: tooltip, cssFormat: alignRight  },
-    { id: 'updatedAt',	header: 'Updated', autowidth: true, adjust: true, tooltip: tooltip, template: returnUpdatedAtTemplate },
+    //{ id: 'currency',	header: 'Currency', sort: 'string', adjust: true, tooltip: tooltip, template: returnCurrencyTemplate },
+    //{ id: 'averageLoanHoldingTime', header:'Average loan holding time', autowidth: true, adjust: true, tooltip: tooltip, cssFormat: alignRight },
+    //{ id: 'bestReturnRate', header:'Best loan rate', autowidth: true, adjust: true, sort: 'string', tooltip: tooltip, template: returnBestReturnRateTemplate, cssFormat: alignCenter },
+    //{ id: 'bestDuration', header:'Best loan duration', autowidth: true, adjust: true, tooltip: tooltip, cssFormat: alignCenter },
+    //{ id: 'minOrderAmount', header:'Min offer amount', autowidth: true, adjust: true, tooltip: tooltip, cssFormat: alignRight  },
+    //{ id: 'updatedAt',	header: 'Updated', autowidth: true, adjust: true, tooltip: tooltip, template: returnUpdatedAtTemplate },
+
+    { id: 'currency',	header: '코인', sort: 'string', adjust: true, tooltip: tooltip, template: returnCurrencyTemplate },
+    { id: 'averageLoanHoldingTime', header:'평균 랜딩 보유 시간', autowidth: true, adjust: true, tooltip: tooltip, cssFormat: alignRight },
+    { id: 'bestReturnRate', header:'최적 랜딩 이율', autowidth: true, adjust: true, sort: 'string', tooltip: tooltip, template: returnBestReturnRateTemplate, cssFormat: alignCenter },
+    { id: 'bestDuration', header:'최적 랜딩 기간', autowidth: true, adjust: true, tooltip: tooltip, cssFormat: alignCenter },
+    { id: 'minOrderAmount', header:'최소 오퍼량', autowidth: true, adjust: true, tooltip: tooltip, cssFormat: alignRight  },
+    { id: 'updatedAt',	header: '변경이력', autowidth: true, adjust: true, tooltip: tooltip, template: returnUpdatedAtTemplate },
+      
   ],
   data: [],
   tooltip: true,
@@ -242,16 +259,20 @@ let statusView = {
     {
       type: 'clean',
       rows: [
-        { view:"template", template:"poloLender Pro App", type:"section", css: 'section webix_section' },
+        //{ view:"template", template:"poloLender Pro App", type:"section", css: 'section webix_section' },
+        { view:"template", template:"폴로랜더 프로 앱", type:"section", css: 'section webix_section' },
         poloLenderAppStatusConfig,
         { gravity: 0.1 },
-        { view:"template", template:"poloLender Pro Lending Engine", type:"section", css: 'section webix_section' },
+        //{ view:"template", template:"poloLender Pro Lending Engine", type:"section", css: 'section webix_section' },
+        { view:"template", template:"폴로랜더 프로 랜딩 엔진", type:"section", css: 'section webix_section' },
         lendingEngineStatusConfig,
         { gravity: 0.1 },
-        { view:"template", template:"poloLending-Advisor Engine", type:"section" },
+        //{ view:"template", template:"poloLending-Advisor Engine", type:"section" },
+        { view:"template", template:"poloLending-Advisor 엔진", type:"section" },
         advisorEngineStatusConfig,
         { gravity: 0.1 },
-        { view:"template", template:"poloLending-Advisor Info", type:"section" },
+        //{ view:"template", template:"poloLending-Advisor Info", type:"section" },
+        { view:"template", template:"poloLending-Advisor 정보", type:"section" },
         advisorInfoTableConfig,
         { gravity: 1 },
       ]
@@ -288,7 +309,8 @@ let updateLendingEngineStatus = function updateLendingEngineStatus() {
   $$('lendingEngineStatus_apiActivity').refresh();
   let lendingEngineStartStopButtonUi = $$('lendingEngineStartStopButton');
   lendingEngineStartStopButtonUi.define('type', lendingEngineStatusData.isTradingEnabled && 'danger' || 'form');
-  lendingEngineStartStopButtonUi.setValue(lendingEngineStatusData.isTradingEnabled && 'Stop' || 'Start');
+  //lendingEngineStartStopButtonUi.setValue(lendingEngineStatusData.isTradingEnabled && 'Stop' || 'Start');
+  lendingEngineStartStopButtonUi.setValue(lendingEngineStatusData.isTradingEnabled && '종료' || '시작');
   lendingEngineStartStopButtonUi.refresh();
 };
 

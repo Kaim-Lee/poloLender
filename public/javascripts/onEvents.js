@@ -3,6 +3,7 @@ const setupOnEvents = function setupOnEvents() {
   let poloLenderAppConnection;
 
   socket.on('connect', function () {
+    //poloLenderAppConnection = '연결됨';
     poloLenderAppConnection = 'connected';
     if (storage.browserAuth && storage.browserAuth.token) {
       socket.emit('authorization', storage.browserAuth.token, 'onConnect');
@@ -11,7 +12,8 @@ const setupOnEvents = function setupOnEvents() {
     updatePoloLenderAppStatus();
   });
   socket.on('reconnect', function () {
-    poloLenderAppConnection = 'connected';
+    //poloLenderAppConnection = 'connected';
+    poloLenderAppConnection = '연결됨';
     hideConnectionErrorMessage();
     updatePoloLenderAppStatus();
   });
@@ -26,7 +28,8 @@ const setupOnEvents = function setupOnEvents() {
     updatePoloLenderAppStatus();
   });
   socket.on('disconnect', function () {
-    poloLenderAppConnection = 'disconnected';
+    //poloLenderAppConnection = 'disconnected';
+    poloLenderAppConnection = '연결 끊김';
     showConnectionErrorMessage();
     updatePoloLenderAppStatus();
   });
@@ -53,7 +56,8 @@ const setupOnEvents = function setupOnEvents() {
     let authClient = data;
     hideProcessingDataMessage();
     if (!authClient.isReadAllowed) {
-      webix.message({ type:'error', text: 'Invalid token' });
+      //webix.message({ type:'error', text: 'Invalid token' });
+      webix.message({ type:'error', text: '잘못된 토큰입니다.' });
       storage.browserAuth = {
         isChangeEnabled: storage.browserAuth && storage.browserAuth.hasOwnProperty('isChangeEnabled') ? storage.browserAuth.isChangeEnabled : true,
       };
@@ -65,9 +69,9 @@ const setupOnEvents = function setupOnEvents() {
     mainUi.show();
 
     if (authClient.isReadWriteAllowed){
-      webix.message({text: 'Authorized for read/write' });
+      webix.message({text: '읽기/쓰기 권한입니다.' });
     } else {
-      webix.message({text: 'Authorized for read/only' });
+      webix.message({text: '읽기전용 권한입니다.' });
     }
 
     updatedConfigHandlers.browserAuthSettings();
@@ -109,7 +113,8 @@ const setupOnEvents = function setupOnEvents() {
     } else {
       onConfigUpdate(newConfig);
       webix.message({
-        text: `Config updated`,
+        //text: `Config updated`,
+        text: `설정이 업데이트 되었습니다.`,
       });
     }
   });

@@ -52,15 +52,21 @@ let lendingHistoryInputFormConfig = {
       rows: [
         {
           cols: [
-            { view: 'datepicker', id: 'startDate', timepicker:true, label: 'Start date', value: new Date(parseInt(moment().subtract(7, 'days').format('x'))), format:'%Y-%m-%d %H:%i', labelPosition: 'top', name: 'startDate', width: 180 },
-            { view: 'datepicker', id: 'endDate', timepicker:true, label: 'End date', labelPosition: 'top', value: new Date(), format:'%Y-%m-%d %H:%i', name: 'endDate', width: 180 },
-            { view: 'counter', label: 'Limit', labelPosition: 'top', name: 'limit', step: 100, value: 50, min: 0, max: 10000 },
+            //{ view: 'datepicker', id: 'startDate', timepicker:true, label: 'Start date', value: new Date(parseInt(moment().subtract(7, 'days').format('x'))), format:'%Y-%m-%d %H:%i', labelPosition: 'top', name: 'startDate', width: 180 },
+            //{ view: 'datepicker', id: 'endDate', timepicker:true, label: 'End date', labelPosition: 'top', value: new Date(), format:'%Y-%m-%d %H:%i', name: 'endDate', width: 180 },
+            //{ view: 'counter', label: 'Limit', labelPosition: 'top', name: 'limit', step: 100, value: 50, min: 0, max: 10000 },
+            { view: 'datepicker', id: 'startDate', timepicker:true, label: '시작일', value: new Date(parseInt(moment().subtract(7, 'days').format('x'))), labelPosition: 'top', name: 'startDate', width: 180 },
+            { view: 'datepicker', id: 'endDate', timepicker:true, label: '종료일', labelPosition: 'top', value: new Date(), name: 'endDate', width: 180 },
+            { view: 'counter', label: '페이지당 조회수', labelPosition: 'top', name: 'Limit', step: 100, value: 50, min: 0, max: 10000 },
           ]
         },
         { view: 'radio', value: 2, name: 'period', options:[
-          { id: 1, value: 'Last day' }, //the initially selected item
-          { id: 2, value: 'Last week' },
-          { id: 3, value: 'Last month' },
+          //{ id: 1, value: 'Last day' }, //the initially selected item
+          //{ id: 2, value: 'Last week' },
+          //{ id: 3, value: 'Last month' },
+          { id: 1, value: '어제' }, //the initially selected item
+          { id: 2, value: '최근 1주' },
+          { id: 3, value: '최근 1개월' },   
         ] },
         { view: 'label', label: '' },
         {
@@ -69,20 +75,22 @@ let lendingHistoryInputFormConfig = {
               id: 'refreshButton',
               autoheight: true,
               view: 'button',
-              value: 'Refresh',
+              //value: 'Refresh',
+              value: '조회',
               width: 120,
               type:"form",
               click: clickRefreshButton,
-            },
+            },/*
             {
               id: 'export',
               view: 'button',
               disabled: true,
-              value: 'Export',
+              //value: 'Export',
+              value: '내보내기',
               type:"form",
               width: 120,
               click: clickExportButton,
-            },
+            },*/
           ]
         },
         { view: 'label', id: 'returnLendingHistoryError', label: '' },
@@ -103,16 +111,27 @@ let lendingHistoryTableConfig = {
   drag: true,
   scroll: false,
   columns: [
-    { id: 'currency',	header: 'Currency', sort: 'string', adjust: true, tooltip: tooltip, template: returnCurrencyTemplate },
+    //{ id: 'currency',	header: 'Currency', sort: 'string', adjust: true, tooltip: tooltip, template: returnCurrencyTemplate },
+////    { id: 'id', header:[{ text: 'Id', css: 'table-header-center' }], autowidth: true, adjust: true, sort: "string", tooltip: tooltip, cssFormat: alignRight },
+    //{ id: 'rate', header:[{ text: 'Rate', css: 'table-header-center' }], autowidth: true, adjust: true, sort: "int", tooltip: tooltip, cssFormat: alignRight, template: returnLoanRateTemplate },
+    //{ id: 'amount', header:[{ text: 'Amount', css: 'table-header-center' }], autowidth: true, adjust: true, sort: "int", tooltip: tooltip, cssFormat: alignRight, format: formatAmount },
+    //{ id: 'duration', header: [{text: 'Duration', css: 'table-header-center' }], autowidth: true, adjust: true, sort: "int", tooltip: tooltip , cssFormat: alignRight, format: formatDurationFromDays },
+    //{ id: 'interest', header: [{text: 'Interest', css: 'table-header-center' }], adjust: true, autowidth: true, tooltip: tooltip, sort: "int", cssFormat: alignRight, format: formatAmount },
+    //{ id: 'fee', header: [{text: 'Fee', css: 'table-header-center' }], adjust: true, autowidth: true, tooltip: tooltip, sort: "int", cssFormat: alignRight, format: formatAmount },
+    //{ id: 'earned', header: [{text: 'Earned', css: 'table-header-center' }], adjust: true, autowidth: true, tooltip: tooltip, sort: "int", cssFormat: alignRight, format: formatAmount },
+    //{ id: 'openAt', header:[{ text: 'Open', css: 'table-header-center' }], autowidth: true, adjust: true, sort: 'date', tooltip: tooltip, cssFormat: alignRight, format: formatDate },
+    //{ id: 'closedAt', header:[{ text: 'Closed', css: 'table-header-center' }], autowidth: true, adjust: true, sort: 'date', tooltip: tooltip, cssFormat: alignRight, format: formatDate },
+
+{ id: 'currency',	header: '코인', sort: 'string', adjust: true, tooltip: tooltip, template: returnCurrencyTemplate },
 //    { id: 'id', header:[{ text: 'Id', css: 'table-header-center' }], autowidth: true, adjust: true, sort: "string", tooltip: tooltip, cssFormat: alignRight },
-    { id: 'rate', header:[{ text: 'Rate', css: 'table-header-center' }], autowidth: true, adjust: true, sort: "int", tooltip: tooltip, cssFormat: alignRight, template: returnLoanRateTemplate },
-    { id: 'amount', header:[{ text: 'Amount', css: 'table-header-center' }], autowidth: true, adjust: true, sort: "int", tooltip: tooltip, cssFormat: alignRight, format: formatAmount },
-    { id: 'duration', header: [{text: 'Duration', css: 'table-header-center' }], autowidth: true, adjust: true, sort: "int", tooltip: tooltip , cssFormat: alignRight, format: formatDurationFromDays },
-    { id: 'interest', header: [{text: 'Interest', css: 'table-header-center' }], adjust: true, autowidth: true, tooltip: tooltip, sort: "int", cssFormat: alignRight, format: formatAmount },
-    { id: 'fee', header: [{text: 'Fee', css: 'table-header-center' }], adjust: true, autowidth: true, tooltip: tooltip, sort: "int", cssFormat: alignRight, format: formatAmount },
-    { id: 'earned', header: [{text: 'Earned', css: 'table-header-center' }], adjust: true, autowidth: true, tooltip: tooltip, sort: "int", cssFormat: alignRight, format: formatAmount },
-    { id: 'openAt', header:[{ text: 'Open', css: 'table-header-center' }], autowidth: true, adjust: true, sort: 'date', tooltip: tooltip, cssFormat: alignRight, format: formatDate },
-    { id: 'closedAt', header:[{ text: 'Closed', css: 'table-header-center' }], autowidth: true, adjust: true, sort: 'date', tooltip: tooltip, cssFormat: alignRight, format: formatDate },
+    { id: 'rate', header:[{ text: '이율', css: 'table-header-center' }], autowidth: true, adjust: true, sort: "int", tooltip: tooltip, cssFormat: alignRight, template: returnLoanRateTemplate },
+    { id: 'amount', header:[{ text: '비용', css: 'table-header-center' }], autowidth: true, adjust: true, sort: "int", tooltip: tooltip, cssFormat: alignRight, format: formatAmount },
+    { id: 'duration', header: [{text: '기간', css: 'table-header-center' }], autowidth: true, adjust: true, sort: "int", tooltip: tooltip , cssFormat: alignRight, format: formatDurationFromDays },
+    { id: 'interest', header: [{text: '이자', css: 'table-header-center' }], adjust: true, autowidth: true, tooltip: tooltip, sort: "int", cssFormat: alignRight, format: formatAmount },
+    { id: 'fee', header: [{text: '수수료', css: 'table-header-center' }], adjust: true, autowidth: true, tooltip: tooltip, sort: "int", cssFormat: alignRight, format: formatAmount },
+    { id: 'earned', header: [{text: '수익', css: 'table-header-center' }], adjust: true, autowidth: true, tooltip: tooltip, sort: "int", cssFormat: alignRight, format: formatAmount },
+    { id: 'openAt', header:[{ text: '게시', css: 'table-header-center' }], autowidth: true, adjust: true, sort: 'date', tooltip: tooltip, cssFormat: alignRight, format: formatDate },
+    { id: 'closedAt', header:[{ text: '종료', css: 'table-header-center' }], autowidth: true, adjust: true, sort: 'date', tooltip: tooltip, cssFormat: alignRight, format: formatDate },  
   ],
   fixedRowHeight:false,  rowLineHeight:25, rowHeight:25,
   data: [],
@@ -129,7 +148,8 @@ let historyView = {
     {
       type: 'clean',
       rows: [
-        { view:"template", template:"Lending History", type:"section" },
+        //{ view:"template", template:"Lending History", type:"section" },
+        { view:"template", template:"랜딩 이력", type:"section" },
         lendingHistoryInputFormConfig,
         lendingHistoryTableConfig,
         { gravity: 1 },
@@ -149,7 +169,8 @@ let updateLendingHistory = function updateLendingHistory(errMessage, result) {
     return;
   }
 
-  $$('returnLendingHistoryError').setValue(`Fetched ${result.length} loans`);
+  //$$('returnLendingHistoryError').setValue(`Fetched ${result.length} loans`);  
+  $$('returnLendingHistoryError').setValue(` ${result.length} 개의 내역이 조회됨`);
   let lendingHistoryTable = [];
   result.forEach((loan) => {
     let newLoan = {
