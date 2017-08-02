@@ -997,6 +997,8 @@ export const PoloLender = function(name) {
   };
 
   const setupConfig = function setupConfig(callback) {
+        
+    
     async.series(
       [
         function (callback) {
@@ -1031,10 +1033,6 @@ export const PoloLender = function(name) {
           log.info(`Your read/only authorization token is: ${config.authToken.readOnly}`);
           log.info(`Your read/write authorization token is: ${config.authToken.readWrite}`);
           log.info(`Token expires on: ${config.authToken.tokenExpiresOn}`);
-          
-          logRep(`Your read/only authorization token is: ${config.authToken.readOnly}`); 
-          logRep(`Your read/write authorization token is: ${config.authToken.readWrite}`); 
-          logRep(`Token expires on: ${config.authToken.tokenExpiresOn}`);  
 
           httpServerStart(config.port);
           currentApiKey = config.apiKey;
@@ -1042,6 +1040,14 @@ export const PoloLender = function(name) {
           setupBrowserComms();
           setupAdvisorComms();
           logTg = addTelegramLogger(config.telegramReports && config.telegramReports.telegramToken, config.telegramReports && config.telegramReports.telegramUserId);
+          
+          // ++ soon
+          if(logTg) {
+           logTg.report(`Your read/only authorization token is: ${config.authToken.readOnly}`);
+           logTg.report(`Your read/write authorization token is: ${config.authToken.readWrite}`);
+           logTg.report(`Token expires on: ${config.authToken.tokenExpiresOn}`); 
+          }
+          
           callback(null);
         },
       ],
