@@ -49,7 +49,7 @@ let tabview = {
     { header: "상태", body:{ id: 'statusView', view:"scrollview", scroll: "xy", body: statusView  } },
     { header: "성과", body:{ id: 'performanceView', view:"scrollview", scroll: "xy", body: performanceReportView } },
     { header: "실시간", body:{ id: 'liveView', view:"scrollview", scroll: "xy", body: liveView } },
-    { header: "Logtrail", body: logtrailView },
+    //{ header: "Logtrail", body: logtrailView },
     { header: "내역", body:{ id: 'historyView', view:"scrollview", scroll: "xy", body: historyView } },
     { header: "설정", body:{ id: 'settingsView', view:"scrollview", scroll: "xy", body: settingsView } },
     { header: "정보", body:{ id: 'abountView', view:"scrollview", scroll: "xy", body: aboutView } },   
