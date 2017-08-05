@@ -289,6 +289,12 @@ let updatePoloLenderAppStatus = function updatePoloLenderAppStatus() {
     restartedAt: status.restarted,
     message: clientMessage.message,
   };
+
+  let visibleView = $$('contentTabview').getMultiview().getValue();
+  if (visibleView !== 'statusView') {
+    return;
+  }
+  
   let poloLenderApp_runningSinceUi = $$('poloLenderApp_runningSince');
   if (poloLenderApp_runningSinceUi) poloLenderApp_runningSinceUi.refresh();
   let poloLenderApp_versionUi = $$('poloLenderApp_version');
@@ -305,6 +311,12 @@ let updateLendingEngineStatus = function updateLendingEngineStatus() {
     lendingEngineStopTime: config.status && config.status.lendingEngineStopTime || '',
     lendingEngineStopReason: config.status && config.status.lendingEngineStopReason || '',
   };
+
+  let visibleView = $$('contentTabview').getMultiview().getValue();
+  if (visibleView !== 'statusView') {
+    return;
+  }
+  
   $$('lendingEngineStatus_status').refresh();
   $$('lendingEngineStatus_apiActivity').refresh();
   let lendingEngineStartStopButtonUi = $$('lendingEngineStartStopButton');
@@ -328,8 +340,20 @@ let updateAdvisorEngineStatus = function updateAdvisorEngineStatus() {
   $$('advisorEngine_connectionStatus').refresh();
 };
 
+  let visibleView = $$('contentTabview').getMultiview().getValue();
+  if (visibleView !== 'statusView') {
+    return;
+  }
+
 let advisorInfoTable = [];
-let updateAdvisorInfo = function updateAdvisorInfo(advisorInfo) {
+let advisorInfo = {};
+
+let refreshAdvisorInfo = function refreshAdvisorInfo() {
+  let visibleView = $$('contentTabview').getMultiview().getValue();
+  if (visibleView !== 'statusView') {
+    return;
+  }
+
   _.forEach(advisorInfo, (value, key) => {
     if (key === 'time') {
       return;
@@ -363,11 +387,22 @@ let updateAdvisorInfo = function updateAdvisorInfo(advisorInfo) {
   advisorInfoTableUi.refreshColumns();
 };
 
+let updateAdvisorInfo = function updateAdvisorInfo(data) {
+  advisorInfo = data;
+  refreshAdvisorInfo();
+};
+
+
 let advisorInfoTableUi;
 let lendingEngineStatus_apiActivityUi = null;
 
 let startRefreshingStatus = function startRefreshingStatus() {
   setInterval(function refreshPoloLenderAppStatus() {
+    let visibleView = $$('contentTabview').getMultiview().getValue();
+    if (visibleView !== 'statusView') {
+      return;
+    }
+    
     $$('poloLenderApp_runningSince').refresh();
     $$('poloLenderApp_restartedAt').refresh();
     $$('poloLenderApp_clientMessage').refresh();
@@ -375,6 +410,18 @@ let startRefreshingStatus = function startRefreshingStatus() {
 
   lendingEngineStatus_apiActivityUi = $$('lendingEngineStatus_apiActivity');
   setInterval(function refreshPoloLenderAppInfo() {
+    let visibleView = $$('contentTabview').getMultiview().getValue();
+    if (visibleView !== 'statusView') {
+      return;
+    }
+    
     lendingEngineStatus_apiActivityUi.refresh();
-  }, 50);
+  }, 1000/8);
+};
+
+let refreshStatusView = function refreshStatusView() {
+  refreshAdvisorInfo();
+  updateAdvisorEngineStatus();
+  updateLendingEngineStatus();
+  updatePoloLenderAppStatus();  
 };
