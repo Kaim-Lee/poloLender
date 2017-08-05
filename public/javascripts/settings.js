@@ -123,7 +123,7 @@ let browserAuthConfig = {
               //value: 'Cancel',
               value: '취소',
               click: function () {
-                let fields = ['browserAuth.token', 'browserAuth.rememberForDays', 'browserAuth.tokenExpiresIn', 'browserAuth.generateNewToken'];
+                let fields = ['browserAuth.isChangeEnabled', 'browserAuth.token', 'browserAuth.rememberForDays', 'browserAuth.tokenExpiresIn', 'browserAuth.generateNewToken'];
                 let formId = this.getFormView().config.id;
                 this.getFormView().clearValidation();
                 updatedConfigHandlers[formId]();

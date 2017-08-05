@@ -58,18 +58,15 @@ const setupOnEvents = function setupOnEvents() {
     if (!authClient.isReadAllowed) {
       //webix.message({ type:'error', text: 'Invalid token' });
       webix.message({ type:'error', text: '잘못된 토큰입니다.' });
-      delete storage.browserAuth.token;
-      delete storage.browserAuth.isReadWriteAllowed;
-      delete storage.browserAuth.rememberUntil;
+      storage.browserAuth = {
+        isChangeEnabled: storage.browserAuth && storage.browserAuth.hasOwnProperty('isChangeEnabled') ? storage.browserAuth.isChangeEnabled : true,
+      };
       store.set('poloLender',  { browserAuth: storage.browserAuth });
       return;
     }
 
     authUi.destructor();
     mainUi.show();
-
-    storage.browserAuth.isReadWriteAllowed = authClient.isReadWriteAllowed;
-    store.set('poloLender',  { browserAuth: storage.browserAuth });
 
     if (authClient.isReadWriteAllowed){
       webix.message({text: '읽기/쓰기 권한입니다.' });
@@ -121,5 +118,4 @@ const setupOnEvents = function setupOnEvents() {
       });
     }
   });
-  socket.on('logtrail', onLogtrail);
 };

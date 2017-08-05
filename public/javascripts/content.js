@@ -46,13 +46,12 @@ let tabview = {
     //{ header: "Settings", body:{ view:"scrollview", scroll: "xy", body: settingsView } },
     //{ header: "About", body:{ view:"scrollview", scroll: "xy", body: aboutView } },
 
-    { header: "상태", body:{ id: 'statusView', view:"scrollview", scroll: "xy", body: statusView  } },
-    { header: "성과", body:{ id: 'performanceView', view:"scrollview", scroll: "xy", body: performanceReportView } },
-    { header: "실시간", body:{ id: 'liveView', view:"scrollview", scroll: "xy", body: liveView } },
-    //{ header: "Logtrail", body: logtrailView },
-    { header: "내역", body:{ id: 'historyView', view:"scrollview", scroll: "xy", body: historyView } },
-    { header: "설정", body:{ id: 'settingsView', view:"scrollview", scroll: "xy", body: settingsView } },
-    { header: "정보", body:{ id: 'abountView', view:"scrollview", scroll: "xy", body: aboutView } },   
+    { header: "상태", body:{ view:"scrollview", scroll: "xy", body: statusView } },
+    { header: "성과", body:{ view:"scrollview", scroll: "xy", body: performanceReportView } },
+    { header: "실시간", body:{ view:"scrollview", scroll: "xy", body: liveView } },
+    { header: "내역", body:{ view:"scrollview", scroll: "xy", body: historyView } },
+    { header: "설정", body:{ view:"scrollview", scroll: "xy", body: settingsView } },
+    { header: "정보", body:{ view:"scrollview", scroll: "xy", body: aboutView } },   
   ],
 };
 
@@ -79,10 +78,10 @@ webix.ready(function () {
             let auth = this.getFormView().getValues();
             storage.browserAuth = {
               token: auth.token,
-              isReadWriteAllowed: false,              
+              isReadWriteAllowed: false,
+              expiresOn: auth.rememberForDays === '0' ? -1 : new Date(Date.now() + parseFloat(auth.rememberForDays) * 24 * 60 * 60 * 1000),
               isChangeEnabled: storage.browserAuth && storage.browserAuth.hasOwnProperty('isChangeEnabled') ? storage.browserAuth.isChangeEnabled : true,
               rememberForDays: auth.rememberForDays,
-              rememberUntil: auth.rememberForDays === '0' ? -1 : new Date(Date.now() + parseFloat(auth.rememberForDays) * 24 * 60 * 60 * 1000),
             };
             store.set('poloLender',  { browserAuth: storage.browserAuth });
             socket.emit('authorization', storage.browserAuth.token);
@@ -103,7 +102,7 @@ webix.ready(function () {
   mainUi.hide();
 
   let s = store.get('poloLender');
-  let isChangeEnabled = s && s.browserAuth && s.browserAuth.hasOwnProperty('isChangeEnabled') ? s.browserAuth.isChangeEnabled : 1;
+  let isChangeEnabled = s.browserAuth && s.browserAuth.hasOwnProperty('isChangeEnabled') ? s.browserAuth.isChangeEnabled : true;
   setEnableConfigChanges(isChangeEnabled);
   $$("lendingHistoryInputForm").elements["period"].attachEvent("onChange", onPeriodChange);
   webix.extend($$('lendingHistoryTable'), webix.ProgressBar);
@@ -113,15 +112,6 @@ webix.ready(function () {
   setupOnEvents();
   startRefreshingStatus();
   startRefreshingLiveUpdateStatus();
-
- 
- 
-  $$('contentTabview').getMultiview().attachEvent("onViewChange", function(prevID, nextID){
-    refreshLiveStatus();
-    refreshPerformanceView();
-    refreshStatusView();
-  });
-
 
   storage = store.get('poloLender') || {};
 
