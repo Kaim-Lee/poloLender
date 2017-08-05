@@ -336,14 +336,15 @@ let updateAdvisorEngineStatus = function updateAdvisorEngineStatus() {
     connection: status.lendingAdvisor && status.lendingAdvisor.connection || '',
     authentication: status.lendingAdvisor && status.lendingAdvisor.authentication || { status: 0, message: '' },
   };
-  $$('advisorEngine_server').refresh();
-  $$('advisorEngine_connectionStatus').refresh();
-};
 
   let visibleView = $$('contentTabview').getMultiview().getValue();
   if (visibleView !== 'statusView') {
     return;
   }
+  
+  $$('advisorEngine_server').refresh();
+  $$('advisorEngine_connectionStatus').refresh();
+};
 
 let advisorInfoTable = [];
 let advisorInfo = {};
